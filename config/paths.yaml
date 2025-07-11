@@ -1,0 +1,52 @@
+# Path to a disk with enough space for preprocessing
+root_dir: data/working_dir
+
+# Path to the ECHI dataset directory
+echi_dir: data/chime9_echi
+
+# Directories to store experiment outputs
+exp_dir: ${paths.root_dir}/experiments/${..shared.exp_name}
+
+evaluation_dir: ${paths.exp_dir}/evaluation
+enhancement_dir: ${paths.exp_dir}/enhancement
+train_ha_dir: ${paths.exp_dir}/train_ha
+train_aria_dir: ${paths.exp_dir}/train_aria
+
+enhancement_output_dir: ${paths.enhancement_dir}/{dataset}_submission
+
+# ###########
+# You should not need to change anything below this line
+#
+
+# Directory where the enhancement signal are stored
+
+# chime9_echi dataset layout
+signal_id: "{session}.{device}.{pid}" # Unique identifier for each signal
+signal_dir: ${paths.echi_dir}/{device}/{dataset}
+echi_signal: ${paths.signal_dir}/{session}.{device}.wav
+ref_signal_dir: ${paths.echi_dir}/ref/{dataset}
+ref_signal_file: ${paths.ref_signal_dir}/${paths.signal_id}.wav
+rainbow_signal_dir: ${paths.echi_dir}/participant/{dataset}
+rainbow_signal_file: ${paths.rainbow_signal_dir}/{pid}.wav
+
+# chime9_echi metadata layout
+sessions_file: ${paths.echi_dir}/metadata/sessions.{dataset}.csv
+segment_info_dir: ${paths.echi_dir}/metadata/ref/{dataset}
+segment_info_file: ${paths.segment_info_dir}/${paths.signal_id}.csv
+
+# Path to the reference segment directory
+ref_segment_dir: ${paths.root_dir}/ref_segments/{dataset}/{device}/{segment_type}
+
+# Path to the training segment directory
+train_input_dir: ${paths.root_dir}/train_segments/{dataset}/{device}
+train_input_file: ${paths.train_input_dir}/${paths.signal_id}.{segment}.wav
+train_rainbow_file: ${paths.root_dir}/participant/{dataset}/{pid}.wav
+train_target_dir: ${paths.root_dir}/train_segments/{dataset}/{device}_ref
+train_target_file: ${paths.train_target_dir}/${paths.signal_id}.{segment}.wav
+
+# Names for the enhancement signals
+enhancement_input_dir: ${paths.root_dir}/enhancement_inputs/{device}/{dataset}
+enhancement_input_file: ${paths.enhancement_input_dir}/{session}{device}.wav
+enhancement_raindow_dir: ${paths.root_dir}/enhancement_inputs/participant
+enhancement_rainbow_file: ${paths.enhancement_raindow_dir}/{pid}.wav
+enhancement_output_file: ${paths.enhancement_output_dir}/${paths.signal_id}.wav
